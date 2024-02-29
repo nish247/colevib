@@ -1,0 +1,28 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - master  # デプロイ先のブランチ名に置き換えてください
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Build React app
+        run: npm install && npm run build
+
+      - name: Copy files to deployment branch
+        run: cp -r public/index.html  # デプロイ先のディレクトリ名に置き換えてください
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add -A
+          git commit -m "Deploy to GitHub Pages"
+          git push
