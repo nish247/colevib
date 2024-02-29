@@ -46,8 +46,8 @@ function Count() {
   const vibrate = () => {
     if ("vibrate" in navigator) {
       // バイブレーションを開始する
-      navigator.vibrate(200);
-    }
+      const pattern = [200, 200, 200, 200, 1000, 2000];
+      navigator.vibrate(pattern);    }
   };
 
   return (
