@@ -8,7 +8,7 @@ import Count from './count';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <Count />
   </React.StrictMode>
 );
 
