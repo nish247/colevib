@@ -26,11 +26,19 @@ function Count() {
     if (countdown === 0) {
       clearInterval(timer);
       setTimer(null);
-      for (let i = 0;i<10;i++){
+    }
+  }, [countdown, timer]);
+  
+  // countdown が 0 になった後に実行するため、countdown の値を監視せず、timer だけを監視する
+  useEffect(() => {
+    // timer が null でなく、countdown が 0 の場合にのみサウンドを再生する
+    if (timer !== null && countdown === 0) {
+      for (let i = 0; i < 10; i++) {
         playSound(2000, 100);
       }
     }
-  }, [countdown, timer]);
+  }, [timer]);
+  
 
   const playSound = (frequency, duration) => {
     const oscillator = audioContext.createOscillator();
