@@ -29,6 +29,7 @@ function Count() {
     oscillator.start();
     setTimeout(() => {
       oscillator.stop(); 
+      vibrate();
     }, duration);
   };
 
