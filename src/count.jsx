@@ -26,7 +26,9 @@ function Count() {
     if (countdown === 0) {
       clearInterval(timer);
       setTimer(null);
-      playSound(2000, 100);
+      for (let i = 0;i<10;i++){
+        playSound(2000, 100);
+      }
     }
   }, [countdown, timer]);
 
@@ -46,7 +48,7 @@ function Count() {
   const vibrate = () => {
     if ("vibrate" in navigator) {
       // バイブレーションを開始する
-      const pattern = [200, 200, 200, 200, 1000, 2000];
+      const pattern = [200, 200, 200, 200, 1000, 2000,200];
       navigator.vibrate(pattern);    }
   };
 
