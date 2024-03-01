@@ -21,25 +21,23 @@ function Count() {
   useEffect(() => {
     // カウントダウンが0になったらタイマーをクリアする
     if (countdown === 0) {
-        playSound(2000, 100);
+      repeat(10);
       clearInterval(timer);
       setTimer(null);
     }
   }, [countdown, timer]);
 
   const playSound = (frequency, duration) => {
-    for (let i = 0;i<10;i++){
-      const oscillator = audioContext.createOscillator();
-      oscillator.type = 'sine'; // 波形を指定（ここではサイン波）
-      oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime); // 周波数を設定
-      oscillator.connect(audioContext.destination); // 出力に接続
-      oscillator.start();        
-      // サウンド再生が終了した後にバイブレーションを再生
-      setTimeout(() => {
-        oscillator.stop(); // サウンド再生停止
-        vibrate(); // バイブレーション再生
-      }, duration);
-  }
+    const oscillator = audioContext.createOscillator();
+    oscillator.type = 'sine'; // 波形を指定（ここではサイン波）
+    oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime); // 周波数を設定
+    oscillator.connect(audioContext.destination); // 出力に接続
+    oscillator.start();        
+    // サウンド再生が終了した後にバイブレーションを再生
+    setTimeout(() => {
+      oscillator.stop(); // サウンド再生停止
+      vibrate(); // バイブレーション再生
+    }, duration);
   };
 
   const vibrate = () => {
@@ -48,6 +46,12 @@ function Count() {
       const pattern = [200, 200, 200, 200, 1000, 2000,200];
       navigator.vibrate(pattern);    }
   };
+
+  const repeat = (repeatNum) => {
+    for (let i = 0;i<repeatNum;i++){
+      playSound(2000,100);
+    }
+  }
 
   return (
     <div>
