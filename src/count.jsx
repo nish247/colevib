@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-
+import Repeat from './repeat';
 function Count() {
   const [countdown, setCountdown] = useState(5);
   const [timer, setTimer] = useState(null);
   const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  const [Number, setNumber] = useState(50);
 
   const start = () => {
     if (countdown > 0 && timer === null) {
@@ -15,7 +16,7 @@ function Count() {
 
   useEffect(() => {
     if (countdown === 0) {
-      repeat(10);
+      repeat(Number);
       clearInterval(timer);
       setTimer(null);
     }
@@ -53,6 +54,7 @@ function Count() {
 
   return (
     <div>
+      <input value={Number} onChange={(e) => setNumber(e.target.value)} />
       <button onClick={start}>スタート</button>
       <div id="countdown">{countdown}</div>
     </div>
