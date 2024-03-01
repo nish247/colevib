@@ -44,9 +44,9 @@ function Count() {
     for (let i = 0; i < repeatNum; i++) {
       setTimeout(() => {
         playSound(2000, 100);
-        if (i === repeatNum - 1) {
-          setTimeout(vibrate, 100); // 最後の音が終了した後にバイブレーションを再生
-        }
+        // if (i === repeatNum - 1) {
+        //   setTimeout(vibrate, 100); // 最後の音が終了した後にバイブレーションを再生
+        // }
       }, i * 4000); // 音を連続して再生するために、再生間隔を少し開ける
     }
   };
