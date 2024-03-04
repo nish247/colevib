@@ -4,12 +4,13 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import Count from './count';
 import Repeat from './repeat';
+import Record from './record';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Count />
-    {/* <Repeat /> */}
+    <Record />
   </React.StrictMode>
 );
 
