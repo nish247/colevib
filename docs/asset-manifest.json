@@ -1,15 +1,17 @@
 {
   "files": {
-    "main.css": "/colevib/static/css/main.e6c13ad2.css",
-    "main.js": "/colevib/static/js/main.ec0c0f6f.js",
+    "main.css": "/colevib/static/css/main.a244e77a.css",
+    "main.js": "/colevib/static/js/main.b506be8d.js",
     "static/js/453.3210130d.chunk.js": "/colevib/static/js/453.3210130d.chunk.js",
+    "static/media/_interop_require_wildcard.cjs": "/colevib/static/media/_interop_require_wildcard.c54f7b5a0af7468af809.cjs",
     "index.html": "/colevib/index.html",
-    "main.e6c13ad2.css.map": "/colevib/static/css/main.e6c13ad2.css.map",
-    "main.ec0c0f6f.js.map": "/colevib/static/js/main.ec0c0f6f.js.map",
+    "static/media/_interop_require_default.cjs": "/colevib/static/media/_interop_require_default.9765e935c5a6e5dec7f6.cjs",
+    "main.a244e77a.css.map": "/colevib/static/css/main.a244e77a.css.map",
+    "main.b506be8d.js.map": "/colevib/static/js/main.b506be8d.js.map",
     "453.3210130d.chunk.js.map": "/colevib/static/js/453.3210130d.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.e6c13ad2.css",
-    "static/js/main.ec0c0f6f.js"
+    "static/css/main.a244e77a.css",
+    "static/js/main.b506be8d.js"
   ]
 }
