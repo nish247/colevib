@@ -4,6 +4,7 @@ const Record = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [mediaRecorder, setMediaRecorder] = useState(null);
   const [recordedChunks, setRecordedChunks] = useState([]);
+  const [audioUrl, setAudioUrl] = useState(null);
 
   const startRecording = async () => {
     try {
@@ -18,9 +19,8 @@ const Record = () => {
 
       recorder.onstop = () => {
         const audioBlob = new Blob(recordedChunks, { type: 'audio/wav' });
-        const audioUrl = URL.createObjectURL(audioBlob);
-        const audio = new Audio(audioUrl);
-        audio.play();
+        const url = URL.createObjectURL(audioBlob);
+        setAudioUrl(url);
       };
 
       recorder.start();
@@ -38,6 +38,13 @@ const Record = () => {
     }
   };
 
+  const playRecording = () => {
+    if (audioUrl) {
+      const audio = new Audio(audioUrl);
+      audio.play();
+    }
+  };
+
   return (
     <div>
       <button onClick={startRecording} disabled={isRecording}>
@@ -45,6 +52,9 @@ const Record = () => {
       </button>
       <button onClick={stopRecording} disabled={!isRecording}>
         Stop Recording
+      </button>
+      <button onClick={playRecording} disabled={!audioUrl}>
+        Play Recording
       </button>
     </div>
   );
