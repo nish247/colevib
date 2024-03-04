@@ -1,100 +1,53 @@
-import Head from 'next/head';
-import { useReactMediaRecorder} from 'react-media-recorder';
-import styles from '../src/styles/Home.module.css'
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 
+const Record = () => {
+  const [isRecording, setIsRecording] = useState(false);
+  const [mediaRecorder, setMediaRecorder] = useState(null);
+  const [recordedChunks, setRecordedChunks] = useState([]);
 
-export default function Home() {
+  const startRecording = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const recorder = new MediaRecorder(stream);
+      
+      recorder.ondataavailable = (e) => {
+        if (e.data.size > 0) {
+          setRecordedChunks((prev) => [...prev, e.data]);
+        }
+      };
 
-  const {
-    status,
-    startRecording,
-    stopRecording,
-    resumeRecording,
-    pauseRecording,
-    mediaBlobUrl,
-  } = useReactMediaRecorder({ audio: true });
+      recorder.onstop = () => {
+        const audioBlob = new Blob(recordedChunks, { type: 'audio/wav' });
+        const audioUrl = URL.createObjectURL(audioBlob);
+        const audio = new Audio(audioUrl);
+        audio.play();
+      };
 
-  const [isNowRecording, setIsNowRecording] = useState(false)
+      recorder.start();
+      setIsRecording(true);
+      setMediaRecorder(recorder);
+    } catch (error) {
+      console.error('Error starting recording:', error);
+    }
+  };
 
-
-  function onStart() {
-    startRecording()
-    setIsNowRecording(true)
-  }
-  function onPause() {
-    pauseRecording()
-  }
-  function onResume() {
-    resumeRecording()
-  }
-  function onStop() {
-    stopRecording()
-    setIsNowRecording(false)
-  }
-
+  const stopRecording = () => {
+    if (mediaRecorder) {
+      mediaRecorder.stop();
+      setIsRecording(false);
+    }
+  };
 
   return (
-    <div className={styles.container}>
-      <Head>
-        <script>
-          {
-            () => {
-              // CSRでscriptを実行するために行う
-              if (!window.MediaRecorder) {
-                document.write(
-                  decodeURI('%3Cscript defer src="/polyfill.js">%3C/script>')
-                )
-              }
-            }
-          }
-        </script>
-
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <div className={styles.card}>
-            <button onClick={onStart} type="button" className="m-1">Record</button>
-            <button onClick={onPause} type="button" className="m-1">Pause</button>
-            <button onClick={onResume} type="button" className="m-1">Resume</button>
-            <button onClick={onStop} type="button" className="m-1">Stop</button>
-          </div>
-          <div className={styles.card}>
-
-            <audio src={mediaBlobUrl} controls />
-          </div>
-
-
-
-          <div className={styles.card}>
-            {isNowRecording ? <p>録音中</p> : <p>録音可能</p>}
-          </div>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
+    <div>
+      <button onClick={startRecording} disabled={isRecording}>
+        Start Recording
+      </button>
+      <button onClick={stopRecording} disabled={!isRecording}>
+        Stop Recording
+      </button>
     </div>
-  )
-}
+  );
+};
+
+export default Record;
