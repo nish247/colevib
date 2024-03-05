@@ -3,22 +3,22 @@ import React, { useState } from 'react';
 const Record = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [mediaRecorder, setMediaRecorder] = useState(null);
-  const [recordedChunks, setRecordedChunks] = useState([]);
   const [audioUrl, setAudioUrl] = useState(null);
 
   const startRecording = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       const recorder = new MediaRecorder(stream);
-      
+      const chunks = [];
+
       recorder.ondataavailable = (e) => {
         if (e.data.size > 0) {
-          setRecordedChunks((prev) => [...prev, e.data]);
+          chunks.push(e.data);
         }
       };
 
       recorder.onstop = () => {
-        const audioBlob = new Blob(recordedChunks, { type: 'audio/wav' });
+        const audioBlob = new Blob(chunks, { type: 'audio/wav' });
         const url = URL.createObjectURL(audioBlob);
         setAudioUrl(url);
       };
