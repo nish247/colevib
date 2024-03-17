@@ -17,12 +17,26 @@ const Record = () => {
         }
       };
 
+      // recorder.onstop = () => {
+      //   const audioBlob = new Blob(chunks, { type: 'audio/wav' });
+      //   const url = URL.createObjectURL(audioBlob);
+      //   setAudioUrl(url);
+      // };
+
       recorder.onstop = () => {
         const audioBlob = new Blob(chunks, { type: 'audio/wav' });
         const url = URL.createObjectURL(audioBlob);
         setAudioUrl(url);
+      
+        const a = document.createElement('a');
+        document.body.appendChild(a);
+        a.style = 'display: none';
+        a.href = url;
+        a.download = 'recording.wav';
+        a.click();
+        window.URL.revokeObjectURL(url);
       };
-
+      
       recorder.start();
       setIsRecording(true);
       setMediaRecorder(recorder);
